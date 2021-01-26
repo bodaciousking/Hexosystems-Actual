@@ -7,7 +7,9 @@ public class Hextile : MonoBehaviour
     public Vector2 tileLocation;
 
     public bool isCity;
+    public bool blocked;
     public GameObject myCity;
+    public int owningPlayerID;
 
     private void Start()
     {
