@@ -19,26 +19,27 @@ public class MsgDisplay : MonoBehaviour
             return;
         }
         instance = this;
-    }
-    public void DisplayMessage(string messageText)
+    } //singleton
+    public void DisplayMessage(string messageText, float duration)
     {
-        StopCoroutine(FadeOutRoutine());
+        StopCoroutine(FadeOutRoutine(duration));
         displayText.gameObject.SetActive(true);
         displayText.text = messageText;
-        displayText.color = Color.white;
+        displayText.color = textColor;
         displayText.alpha = 255;
-        FadeOut();
+        FadeOut(duration);
     }
 
     //Fade time in seconds
-    float fadeOutTime = 0.5f;
-    public void FadeOut()
+    float fadeOutTime = 0.8f;
+    public void FadeOut(float duration)
     {
-        StartCoroutine(FadeOutRoutine());
+        StopCoroutine(FadeOutRoutine(duration));
+        StartCoroutine(FadeOutRoutine(duration));
     }
-    private IEnumerator FadeOutRoutine()
+    private IEnumerator FadeOutRoutine(float duration)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(duration);
 
         for (float t = 0.01f; t < fadeOutTime; t += Time.deltaTime)
         {
@@ -50,9 +51,7 @@ public class MsgDisplay : MonoBehaviour
     }
     void Start()
     {
-        textColor = Color.white;
-
-        //DisplayMessage("Place Your Cities");
+        textColor = displayText.color;
 
     }
 

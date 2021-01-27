@@ -25,6 +25,17 @@ public class MapGeneration : MonoBehaviour
             List<Hextile> hextileList = new List<Hextile>();
 
             int numRows = 15;
+
+            GameObject planetObject = Instantiate(planetSphere, mapHolder.transform.position, Quaternion.identity);
+            planetObject.transform.position += new Vector3((numRows - 1) / 2, -23.3f, -1.5f);
+            planetObject.transform.localScale *= 50;
+            Color planetColor = Random.ColorHSV();
+            planetObject.GetComponent<Renderer>().material.color = planetColor;
+            planetObject.transform.parent = mapHolder;
+            Planet planet = planetObject.gameObject.AddComponent<Planet>();
+            CityHandler cityHandler = planetObject.gameObject.AddComponent<CityHandler>();
+            planet.hextileList = hextileList;
+
             for (int k = 1; k <= numRows; k++)
             {
                 int rowLength = DetermineRowLength(k, numRows);
@@ -38,6 +49,10 @@ public class MapGeneration : MonoBehaviour
                 {
                     GameObject newTile = Instantiate(hextile, new Vector3(k, 0, j - rowCenter), Quaternion.identity);
                     newTile.transform.parent = rowHolder;
+
+                    GameObject floor = newTile.transform.Find("Main").gameObject;
+                    floor.GetComponent<Renderer>().material.color = planetColor;
+                    floor.GetComponent<FloorGfx>().myColor = planetColor;
 
                     Transform cityObject = newTile.transform.Find("City");
                     var euler = newTile.transform.eulerAngles; //Rotate the tile randomly so the cities look a little random.
@@ -65,14 +80,6 @@ public class MapGeneration : MonoBehaviour
             mapHolder.transform.position = mapHolder.parent.position;
             mapHolder.transform.position += new Vector3(offset * i, 0, offset * i);
 
-            GameObject planetObject = Instantiate(planetSphere, mapHolder.transform.position, Quaternion.identity);
-            planetObject.transform.position += new Vector3((numRows-1)/2, -23.3f, -1.5f);
-            planetObject.transform.localScale *= 50;
-            planetObject.GetComponent<Renderer>().material.color = Random.ColorHSV();
-            planetObject.transform.parent = mapHolder;
-            Planet planet = planetObject.gameObject.AddComponent<Planet>();
-            CityHandler cityHandler = planetObject.gameObject.AddComponent<CityHandler>();
-            planet.hextileList = hextileList;
 
             Transform camAnchor = new GameObject().transform;
             camAnchor.transform.position = mapHolder.position += new Vector3(0, 0, numRows / 2);

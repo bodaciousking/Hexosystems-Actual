@@ -16,6 +16,5 @@ public class CityPlaceButton : MonoBehaviour
     {
         targettingScript.EnableCityPlacementPrefab(citySize);
         targettingScript.intendedSize = actualSize;
-
     }
 }

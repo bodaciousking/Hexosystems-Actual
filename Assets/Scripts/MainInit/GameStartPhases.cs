@@ -7,14 +7,24 @@ public class GameStartPhases : MonoBehaviour
     public initPhase currentPhase;
     MsgDisplay msgD;
     CameraControll cC;
-    float phaseTimer, phaseDelay = 2;
+    TemplateSelection tS;
+    public static GameStartPhases instance;
+    float phaseTimer, phaseDelay = 3;
     public int currentPlayerTurn;
-
+    public void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.Log("Too many message initPhase scripts!");
+            return;
+        }
+        instance = this;
+    } //singleton
     public enum initPhase
     {
         Welcome,
         PlaceCities,
-        
+        Prepare
     }
 
     private void Start()
@@ -22,8 +32,9 @@ public class GameStartPhases : MonoBehaviour
         currentPlayerTurn = 1;
         msgD = MsgDisplay.instance;
         cC = CameraControll.instance;
+        tS = TemplateSelection.instance;
         currentPhase = initPhase.Welcome;
-        msgD.DisplayMessage("Welcome");
+        msgD.DisplayMessage("Welcome", 2f);
     }
 
     public void Update()
@@ -40,16 +51,22 @@ public class GameStartPhases : MonoBehaviour
 
     public void PlaceCities()
     {
-        msgD.DisplayMessage("Place Your Cities");
+        msgD.DisplayMessage("Choose Your Layout", 2f);
         currentPhase = initPhase.PlaceCities;
+        tS.FadeInImage();
         //cC.GoToPos(cC.camSpots[0]);
+    }
+
+    public void PreparePhase()
+    {
+        msgD.DisplayMessage("Prepare Yourself", 4f);
+        currentPhase = initPhase.Prepare;
     }
 
     public void Delay(float timeToDelay)
     {
         StartCoroutine(DelayTime(timeToDelay));
     }
-
 
     public IEnumerator DelayTime(float delayForTime)
     {

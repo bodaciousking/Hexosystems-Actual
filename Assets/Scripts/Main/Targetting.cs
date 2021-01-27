@@ -9,6 +9,7 @@ public class Targetting : MonoBehaviour
     public GameObject selectedCityObject;
     public List<GameObject> cityPlaceObjects = new List<GameObject>();
     public static Targetting instance;
+    TemplateSelection tS;
     public int intendedSize;
     List<Hextile> possibleCity = new List<Hextile>();
     List<Hextile> possibleBlockedArea = new List<Hextile>();
@@ -29,6 +30,8 @@ public class Targetting : MonoBehaviour
 
     public void Start()
     {
+        tS = TemplateSelection.instance;
+
         for (int i = 0; i < cityPlaceObjects.Count; i++)
         {
             GameObject newObject = Instantiate(cityPlaceObjects[i]);
@@ -43,7 +46,7 @@ public class Targetting : MonoBehaviour
     public void Update()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-       int layerMask = 1 << 8;
+        int layerMask = 1 << 8;
         if (Physics.Raycast(ray, out hit, 5000, layerMask))
         {
             Debug.Log(hit.collider.name);
@@ -82,7 +85,7 @@ public class Targetting : MonoBehaviour
 
     public void CreateCity()
     {
-        if(possibleCity.Count < intendedSize)
+        if (possibleCity.Count < intendedSize)
         {
             Debug.Log("City too small!");
             return;
@@ -106,32 +109,42 @@ public class Targetting : MonoBehaviour
         }
         possibleBlockedArea.Clear();
 
-        //Planet owningPlanet = 
+        tS.DecrementRemainingCities(intendedSize);
     }
     public void ClearCity()
     {
-        for (int i = 0; i < possibleCity.Count; i++)
-        {
-            Renderer objRend = possibleCity[i].transform.Find("Main").GetComponent<Renderer>();
-            objRend.material.color = Color.white;
-        }
         possibleCity.Clear();
 
-        for (int i = 0; i < possibleBlockedArea.Count; i++)
-        {
-            Renderer objRend = possibleBlockedArea[i].transform.Find("Main").GetComponent<Renderer>();
-            objRend.material.color = Color.white;
-        }
         possibleBlockedArea.Clear();
     }
-    public void EnableCityPlacementPrefab(int size)
+    public void EnableCityPlacementPrefab(int listIndex)
     {
+        switch (listIndex)
+        {
+            case 0:
+                intendedSize = 7;
+                break;
+            case 1:
+                intendedSize = 4;
+                break;
+            case 2:
+                intendedSize = 3;
+                break;
+            default:
+                Debug.Log("invalid city size recieved! Size recieved: " + listIndex);
+                break;
+        }
         if (selectedCityObject)
         {
             selectedCityObject.SetActive(false);
         }
-        cityPlaceObjects[size].SetActive(true); 
-        selectedCityObject = cityPlaceObjects[size];
+        cityPlaceObjects[listIndex].SetActive(true); 
+        selectedCityObject = cityPlaceObjects[listIndex];
     }
 
+    public void DisableCityPlacementPrefab()
+    {
+        selectedCityObject.SetActive(false);
+        ClearCity();
+    }
 }

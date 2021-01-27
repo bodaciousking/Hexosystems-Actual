@@ -69,8 +69,10 @@ public class InGameObject : MonoBehaviour
 
             if (!tileScript.isCity && !tileScript.blocked)
             {
-                Renderer hextileRenderer = hextileObject.transform.Find("Main").GetComponent<Renderer>();
-                hextileRenderer.material.color = Color.white;
+                Transform gfx = hextileObject.transform.Find("Main");
+                Renderer hextileRenderer = gfx.GetComponent<Renderer>();
+                FloorGfx hextileGfx = gfx.GetComponent<FloorGfx>();
+                hextileRenderer.material.color = hextileGfx.myColor;
                 targettingScript.ClearCity();
             }
         }
