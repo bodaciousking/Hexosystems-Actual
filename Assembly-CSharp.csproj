@@ -62,12 +62,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Grid\Hextile.cs" />
     <Compile Include="Assets\Scripts\Main\CityHandler.cs" />
     <Compile Include="Assets\Scripts\Main\GameNetworkManager.cs" />
+    <Compile Include="Assets\Scripts\Main\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Main\MsgDisplay.cs" />
     <Compile Include="Assets\Scripts\Main\Planet.cs" />
     <Compile Include="Assets\Scripts\Main\Player.cs" />
+    <Compile Include="Assets\Scripts\Main\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\Main\Targetting.cs" />
     <Compile Include="Assets\Scripts\MainInit\GameStartPhases.cs" />
     <Compile Include="Assets\Scripts\MainInit\MapGeneration.cs" />
