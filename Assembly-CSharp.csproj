@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Main\MsgDisplay.cs" />
     <Compile Include="Assets\Scripts\Main\Planet.cs" />
     <Compile Include="Assets\Scripts\Main\Targetting.cs" />
+    <Compile Include="Assets\Scripts\Main\TurnStructure.cs" />
     <Compile Include="Assets\Scripts\MainInit\GameStartPhases.cs" />
     <Compile Include="Assets\Scripts\MainInit\MapGeneration.cs" />
     <Compile Include="Assets\Scripts\MainInit\TemplateButton.cs" />
