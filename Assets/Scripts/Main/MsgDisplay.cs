@@ -9,7 +9,7 @@ public class MsgDisplay : MonoBehaviour
     public TextMeshProUGUI displayText;
     public Image displayImage;
     public static MsgDisplay instance;
-    public Color textColor;
+    Color textColor;
 
     public void Awake()
     {
@@ -19,39 +19,33 @@ public class MsgDisplay : MonoBehaviour
             return;
         }
         instance = this;
-    } //singleton
-    public void DisplayMessage(string messageText, float duration)
+    }
+    public void DisplayMessage(string messageText)
     {
-        StopCoroutine(FadeOutRoutine(duration));
-        displayText.gameObject.SetActive(true);
         displayText.text = messageText;
         displayText.color = textColor;
-        displayText.alpha = 255;
-        FadeOut(duration);
+        FadeOut();
     }
 
     //Fade time in seconds
-    float fadeOutTime = 0.8f;
-    public void FadeOut(float duration)
+    public float fadeOutTime = 3;
+    public void FadeOut()
     {
-        StopCoroutine(FadeOutRoutine(duration));
-        StartCoroutine(FadeOutRoutine(duration));
+        StartCoroutine(FadeOutRoutine());
     }
-    private IEnumerator FadeOutRoutine(float duration)
+    private IEnumerator FadeOutRoutine()
     {
-        yield return new WaitForSeconds(duration);
-
         for (float t = 0.01f; t < fadeOutTime; t += Time.deltaTime)
         {
             displayText.color = Color.Lerp(textColor, Color.clear, Mathf.Min(1, t / fadeOutTime));
             yield return null;
         }
-        displayText.gameObject.SetActive(false);
-
     }
     void Start()
     {
         textColor = displayText.color;
+
+        DisplayMessage("Place Your Cities");
 
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CityHandler : MonoBehaviour
 {
-    public List<City> myCities = new List<City>();
+    
 }
 
 public class City
