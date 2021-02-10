@@ -10,7 +10,11 @@ namespace Mirror.Example.Pong
     public class Player : NetworkBehaviour
     {
 
-        //public int energy = 0;
+        public int energy = 0;
+        public int cardsInHand = 0;
+        public int maxHealth = 10; // change this later 
+        public int currentHealth = 10; 
+
         //other player stats
 
 
